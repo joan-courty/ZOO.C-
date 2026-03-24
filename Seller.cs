@@ -1,6 +1,5 @@
 using System;
-
-// Énumération pour que le vendeur sache de quel animal on parle
+using System.ComponentModel;
 public enum TypeAnimal
 {
     Tigre,
@@ -12,21 +11,19 @@ public enum TypeAnimal
 public class Seller
 {
     // Acheter Nourriture
-    public bool AcheterNourriture(TypeAliment type, float quantite, StockNourriture stock, ref decimal budgetDuZoo)
+    public bool AcheterNourriture(TypeAliment type, float quantite, StockNourriture stock, Bank bank)
     {
         decimal prixTotal = 0m;
         
-       
         if (type == TypeAliment.Viande)
             prixTotal = Catalog.PrixViande * (decimal)quantite; 
         else if (type == TypeAliment.Graine)
             prixTotal = Catalog.PrixGraine * (decimal)quantite; 
 
-        if (budgetDuZoo >= prixTotal)
+        if (bank.Debiter(prixTotal))
         {
-            budgetDuZoo -= prixTotal;
             stock.Ajouter(type, quantite); 
-            Console.WriteLine($"Achat réussi : {quantite}kg de {type} ! Budget restant : {budgetDuZoo}€");
+            Console.WriteLine($"Achat réussi : {quantite}kg de {type} ! Budget restant : {bank.Solde}€");
             return true;
         }
         
@@ -35,7 +32,7 @@ public class Seller
     }
 
     // Acheter Habitat
-    public bool AcheterHabitat(TypeHabitat type, ref decimal budgetDuZoo)
+    public bool AcheterHabitat(TypeHabitat type, Bank bank)
     {
         decimal prixAchat = 0m;
 
@@ -43,10 +40,9 @@ public class Seller
         else if (type == TypeHabitat.Aigle) prixAchat = Catalog.AchatHabitatAigle;
         else if (type == TypeHabitat.Poule) prixAchat = Catalog.AchatHabitatPoule;
 
-        if (budgetDuZoo >= prixAchat)
+        if (bank.Debiter(prixAchat))
         {
-            budgetDuZoo -= prixAchat;
-            Console.WriteLine($"Nouvel habitat pour {type} acheté ! Budget restant : {budgetDuZoo}€");
+            Console.WriteLine($"Nouvel habitat pour {type} acheté ! Budget restant : {bank.Solde}€");
             return true;
         }
 
@@ -55,7 +51,7 @@ public class Seller
     }
 
     // Vendre Habitat
-    public void VendreHabitat(TypeHabitat type, ref decimal budgetDuZoo)
+    public void VendreHabitat(TypeHabitat type, Bank bank)
     {
         decimal prixVente = 0m;
 
@@ -63,14 +59,15 @@ public class Seller
         else if (type == TypeHabitat.Aigle) prixVente = Catalog.VenteHabitatAigle;
         else if (type == TypeHabitat.Poule) prixVente = Catalog.VenteHabitatPoule;
 
-        budgetDuZoo += prixVente;
-        Console.WriteLine($"Habitat pour {type} vendu ! Vous gagnez {prixVente}€. Nouveau budget : {budgetDuZoo}€");
+        bank.Crediter(prixVente);
+        Console.WriteLine($"Habitat pour {type} vendu ! Vous gagnez {prixVente}€. Nouveau budget : {bank.Solde}€");
     }
 
     // Acheter Animaux
-    public bool AcheterAnimal(TypeAnimal espece, int ageMois, ref decimal budgetDuZoo)
+    public bool AcheterAnimal(TypeAnimal espece, int ageMois, Bank bank)
     {
         decimal prixAchat = 0m;
+        
         if (espece == TypeAnimal.Tigre)
         {
             if (ageMois <= 6) prixAchat = Catalog.AchatTigre6Mois;
@@ -93,10 +90,9 @@ public class Seller
         }
 
         // Paiement
-        if (budgetDuZoo >= prixAchat)
+        if (bank.Debiter(prixAchat))
         {
-            budgetDuZoo -= prixAchat; 
-            Console.WriteLine($"Achat réussi : 1 {espece} ({ageMois} mois) acheté ! Budget restant : {budgetDuZoo}€");
+            Console.WriteLine($"Achat réussi : 1 {espece} ({ageMois} mois) acheté ! Budget restant : {bank.Solde}€");
             return true; 
         }
 
@@ -105,7 +101,7 @@ public class Seller
     }
 
     // Vendre Animaux
-    public void VendreAnimal(TypeAnimal espece, int ageMois, ref decimal budgetDuZoo)
+    public void VendreAnimal(TypeAnimal espece, int ageMois, Bank bank)
     {
         decimal prixVente = 0m;
 
@@ -130,7 +126,7 @@ public class Seller
             prixVente = Catalog.VenteCoq6Mois;
         }
 
-        budgetDuZoo += prixVente; 
-        Console.WriteLine($"Vente réussie : 1 {espece} vendu(e) pour {prixVente}€ ! Nouveau budget : {budgetDuZoo}€");
+        bank.Crediter(prixVente);
+        Console.WriteLine($"Vente réussie : 1 {espece} vendu(e) pour {prixVente}€ ! Nouveau budget : {bank.Solde}€");
     }
 }
