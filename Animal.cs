@@ -23,7 +23,7 @@ public abstract class Animal
     public bool EstEnGestation { get; protected set; }
     public int JoursGestationRestants { get; protected set; }
 
-    public Animal ? Partenaire { get; set; }
+    public Animal Partenaire { get; set; }
     public abstract TypeAlimentation Alimentation { get; }
     public abstract decimal ConsommationJourKg { get; }
     public abstract int JoursAvantFaimMax { get; } 
