@@ -36,9 +36,9 @@ public class Seller
     {
         decimal prixAchat = 0m;
 
-        if (type == TypeHabitat.Tigre) prixAchat = Catalog.AchatHabitatTigre;
-        else if (type == TypeHabitat.Aigle) prixAchat = Catalog.AchatHabitatAigle;
-        else if (type == TypeHabitat.Poule) prixAchat = Catalog.AchatHabitatPoule;
+        if (type == TypeHabitat.EnclosTigre) prixAchat = Catalog.AchatHabitatTigre;
+        else if (type == TypeHabitat.VoliereAigle) prixAchat = Catalog.AchatHabitatAigle;
+        else if (type == TypeHabitat.Poulailler) prixAchat = Catalog.AchatHabitatPoule;
 
         if (bank.Debiter(prixAchat))
         {
@@ -55,9 +55,9 @@ public class Seller
     {
         decimal prixVente = 0m;
 
-        if (type == TypeHabitat.Tigre) prixVente = Catalog.VenteHabitatTigre;
-        else if (type == TypeHabitat.Aigle) prixVente = Catalog.VenteHabitatAigle;
-        else if (type == TypeHabitat.Poule) prixVente = Catalog.VenteHabitatPoule;
+        if (type == TypeHabitat.EnclosTigre) prixVente = Catalog.VenteHabitatTigre;
+        else if (type == TypeHabitat.VoliereAigle) prixVente = Catalog.VenteHabitatAigle;
+        else if (type == TypeHabitat.Poulailler) prixVente = Catalog.VenteHabitatPoule;
 
         bank.Crediter(prixVente);
         Console.WriteLine($"Habitat pour {type} vendu ! Vous gagnez {prixVente}€. Nouveau budget : {bank.Solde}€");
