@@ -20,9 +20,13 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 <<<<<<< HEAD
+<<<<<<< HEAD
 		SolutionGuid = {16294BD2-E98C-47A8-ACC7-FF2CF69FDE79}
 =======
 		SolutionGuid = {A1FBF170-32C2-42B2-B798-F564449FFA52}
 >>>>>>> ZOO/food
+=======
+		SolutionGuid = {1DD0D972-7589-42AE-AEFA-5F29386ABDB6}
+>>>>>>> ZOO/animal
 	EndGlobalSection
 EndGlobal
